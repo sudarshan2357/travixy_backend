@@ -11,7 +11,7 @@ import { verifyAdmin, verifyUser } from "../utils/VerifyToken.js";
 
 
 // Update User
-router.put("/:id", verifyUser,updateUser);
+router.put("/:id", verifyUser, updateUser);
 
 // Delete User
 router.delete("/:id", verifyUser, deleteUser);

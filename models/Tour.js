@@ -36,7 +36,7 @@ const tourSchema = new mongoose.Schema(
             {
                 type: mongoose.Types.ObjectId,
                 ref: "Review",
-            }
+            },
         ],
         featured: {
             type: Boolean,

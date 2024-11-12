@@ -21,11 +21,13 @@ export const register = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Successfully created",
+      user: newUser,
     });
   } catch (err) {
+    console.error("Error during registration:", err);
     res.status(500).json({
-      success: false,
-      message: "Failed to create. Try again",
+        success: false,
+        message: "Failed to create. Try again",
     });
   }
 };
@@ -64,20 +66,18 @@ export const login = async (req, res) => {
       process.env.JWT_SECRET_KEY,
       { expiresIn: "15d" }
     );
-
-    // Set token in the browser cookies and send response to client
-    res
-      .cookie("accessToken", token, {
-        httpOnly: true,
-        expires: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000), // 15 days
-      })
-      .status(200)
-      .json({
+    res.cookie("access_token", token, {
+      httpOnly: true,
+      expires: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000), 
+      sameSite: "lax",  
+    })
+    .status(200)
+    .json({
         success: true,
         token,
         data: { ...rest },
         role,
-      });
+    });
   } catch (err) {
     res.status(500).json({
       success: false,
